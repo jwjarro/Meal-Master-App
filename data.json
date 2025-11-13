@@ -1,0 +1,17 @@
+{
+    "Data": {
+        "week_total": 17,
+        "week_current": 12,
+        "week_remaining": 5,
+        "dollars_total": 570,
+        "dollars_remaining": 179.29,
+        "weekly_max": 33.54,
+        "weekly_remaining": 11.56,
+        "swipes_max": 10,
+        "swipes_remaining": 10
+    },
+    "Text": {
+        "default": "This is the default text.",
+        "save": "Information"
+    }
+}
