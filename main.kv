@@ -7,53 +7,76 @@
     halign: 'center'
     background_normal: ''
 
-<HomeScreen>:
-    orientation: 'vertical'
+<AppScreenManager>:
+    
 
+    HomeScreen:
+        name: "home_screen"
+
+    SettingsScreen:
+        name: "settings_screen"
+
+<HomeScreen>:
     BoxLayout:
         orientation: 'vertical'
-
-        Label:
-            id: display
-            text: "Welcome"
-            font_size: 30
-            halign: 'center'
-            text_size: (self.width, None)
-            bold: True
-            background_color: (149/255,146/255,182/255,1)
-            canvas.before:
-                Color:
-                    rgba: self.background_color
-                Rectangle:
-                    size: self.size
-                    pos: self.pos
-            
 
         BoxLayout:
             orientation: 'vertical'
 
+            Label:
+                id: display
+                text: "Welcome"
+                font_size: 30
+                halign: 'center'
+                text_size: (self.width, None)
+                bold: True
+                background_color: (149/255,146/255,182/255,1)
+                canvas.before:
+                    Color:
+                        rgba: self.background_color
+                    Rectangle:
+                        size: self.size
+                        pos: self.pos
+                
+
             BoxLayout:
-                orientation: 'horizontal'
+                orientation: 'vertical'
 
-                CustomButton:
-                    text: 'Meal Swipe'
-                    background_color: (184/255,224/255,210/255,1)
-                    on_release: root.update_display()
+                BoxLayout:
+                    orientation: 'horizontal'
 
-                CustomButton:
-                    text: 'Dining Dollars'
-                    background_color: (214/255,234/255,223/255,1)
-                    on_release: root.update_display()
+                    CustomButton:
+                        text: 'Meal Swipe'
+                        background_color: (184/255,224/255,210/255,1)
+                        on_release: root.update_display()
 
-            BoxLayout:
-                orientation: 'horizontal'
+                    CustomButton:
+                        text: 'Dining Dollars'
+                        background_color: (214/255,234/255,223/255,1)
+                        on_release: root.update_display()
 
-                CustomButton:
-                    text: 'Progress Week'
-                    background_color: (128/255,155/255,206/255,1)
-                    on_release: root.update_display()
+                BoxLayout:
+                    orientation: 'horizontal'
 
-                CustomButton:
-                    text: 'Settings'
-                    background_color: (149/255,184/255,209/255,1)
-                    on_release: root.update_display()        
+                    CustomButton:
+                        text: 'Progress Week'
+                        background_color: (128/255,155/255,206/255,1)
+                        on_release: root.manager.transition.direction = "up"
+
+                    CustomButton:
+                        text: 'Settings'
+                        background_color: (149/255,184/255,209/255,1)
+                        on_release: 
+                            root.manager.transition.direction = "up"
+                            app.root.current = 'settings_screen'        
+
+<SettingsScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+
+        CustomButton:
+            text: 'Save'
+            background_color: (149/255,184/255,209/255,1)
+            on_release: 
+                root.manager.transition.direction = "down"
+                app.root.current = 'home_screen'

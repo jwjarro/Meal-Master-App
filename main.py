@@ -2,6 +2,7 @@ from kivy.app import App
 from kivy.lang.builder import Builder
 from kivy.storage.jsonstore import JsonStore
 
+from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
 from kivy.uix.widget import Widget
 from kivy.uix.boxlayout import BoxLayout
 
@@ -10,7 +11,10 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.core.window import Window
 Window.size = (1080/3, 2400/3) 
 
-class HomeScreen(BoxLayout):
+class AppScreenManager(ScreenManager):
+    pass
+
+class HomeScreen(Screen):
         
     def save_text(self):
        self.store = JsonStore('data.json')
@@ -35,6 +39,10 @@ class HomeScreen(BoxLayout):
 
         self.ids.display.text = display_content
 
+        
+class SettingsScreen(Screen):
+    pass
+
 class MealMaster(App):
 
     def build(self):
@@ -42,12 +50,10 @@ class MealMaster(App):
         Builder.load_file('main.kv')
         self.store = JsonStore('data.json')
 
-        HS = HomeScreen()
+        Manager = AppScreenManager()
+        Manager.current_screen.update_display()
 
-        # HS.ids.text_box.text = self.store.get('Text')['default']
-        # HS.ids.text_label.text = 'test'
-
-        return HS
+        return Manager
 
 if __name__ == "__main__":
     MealMaster().run()
