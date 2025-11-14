@@ -8,13 +8,15 @@
     background_normal: ''
 
 <AppScreenManager>:
-    
 
     HomeScreen:
         name: "home_screen"
 
     SettingsScreen:
         name: "settings_screen"
+
+    DiningDollarScreen:
+        name: "dining_dollar_screen"
 
 <HomeScreen>:
     BoxLayout:
@@ -48,12 +50,14 @@
                     CustomButton:
                         text: 'Meal Swipe'
                         background_color: (184/255,224/255,210/255,1)
-                        on_release: root.update_display()
+                        on_release: root.meal_swipe()
 
                     CustomButton:
                         text: 'Dining Dollars'
                         background_color: (214/255,234/255,223/255,1)
-                        on_release: root.update_display()
+                        on_release: 
+                            root.manager.transition.direction = "down"
+                            app.root.current = 'dining_dollar_screen'
 
                 BoxLayout:
                     orientation: 'horizontal'
@@ -80,3 +84,38 @@
             on_release: 
                 root.manager.transition.direction = "down"
                 app.root.current = 'home_screen'
+
+<DiningDollarScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+
+        TextInput:
+            id: input
+            halign: 'center'
+            padding_y: (self.height - self.font_size) / 2.1
+            font_size: 60
+            bold: True
+            hint_text: "Enter price here"
+            input_type: 'number'
+            input_filter: "float"
+            background_color: (186/255,225/255,255/255)
+            background_normal: ''
+            foreground_color: (1, 1, 1, 1)
+
+        BoxLayout:
+            orientation: 'vertical'
+
+            CustomButton:
+                text: 'Spend'
+                background_color: (168/255,230/255,207/255)
+                on_release: 
+                    root.spend_dining_dollars()
+                    root.ids.input.text = ''
+                    app.root.current = 'home_screen'
+            
+            CustomButton:
+                text: 'Cancel'
+                background_color: (255/255,139/255,148/255)
+                on_release: 
+                    root.manager.transition.direction = "down"
+                    app.root.current = 'home_screen'

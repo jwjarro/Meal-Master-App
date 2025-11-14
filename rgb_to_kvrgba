@@ -1,0 +1,6 @@
+list = input('Enter rgb (NO PARENTHESES): ').split(',')
+
+for i in range(3):
+    list[i] += "/255"
+
+print(f"Result: ({list[0]},{list[1]},{list[2]})")

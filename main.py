@@ -41,11 +41,31 @@ class HomeScreen(Screen):
 
         self.ids.display.text = display_content
 
+    def meal_swipe(self):
+
+        data = self.load_data()
+
+        data["swipes_remaining"] -= 1
+
         self.save_data(data)
+
+        self.update_display()
 
         
 class SettingsScreen(Screen):
     pass
+
+class DiningDollarScreen(Screen):
+    
+    def spend_dining_dollars(self):
+        
+        data = HomeScreen.load_data(self)
+
+        data["weekly_remaining"] -= float(self.ids.input.text)
+
+        HomeScreen.save_data(self, data)
+
+        HomeScreen.update_display(self.manager.get_screen("home_screen"))
 
 class MealMaster(App):
 
