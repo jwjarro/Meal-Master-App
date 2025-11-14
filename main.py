@@ -15,29 +15,33 @@ class AppScreenManager(ScreenManager):
     pass
 
 class HomeScreen(Screen):
-        
-    def save_text(self):
-       self.store = JsonStore('data.json')
-       text_data = self.store.get("Text")
-       text_data["save"] = self.ids.text_label.text
-       self.store.put("Text", default=text_data["default"], save=text_data["save"])
 
-    def load_text(self):
+    def load_data(self):
         self.store = JsonStore('data.json')
-        self.ids.text_box.text = self.store.get("Text")["save"]
+        data = {}
+        for key in self.store.keys():
+            data[key] = self.store.get(key)["value"]
+        return data
+      
+    def save_data(self, data):
+       self.store = JsonStore('data.json')
+       for key in data:
+           self.store.put(key, value=data[key])
 
     def update_display(self):
-        self.store = JsonStore('data.json')
-        text_data = self.store.get("Data")
 
-        display_content  = f'Current week: {text_data["week_current"]} / {text_data["week_total"]}\n\n\n'
+        data = self.load_data()
+
+        display_content  = f'Current week: {data["week_current"]} / {data["week_total"]}\n\n\n'
         display_content += f'This week:\n'
-        display_content += f'\nSwipes remaining: {text_data["swipes_remaining"]} / {text_data["swipes_max"]}'
-        display_content += f'\nDollars remaining: ${text_data["weekly_remaining"]} / ${text_data["weekly_max"]}\n\n'
+        display_content += f'\nSwipes remaining: {data["swipes_remaining"]} / {data["swipes_max"]}'
+        display_content += f'\nDollars remaining: ${data["weekly_remaining"]} / ${data["weekly_max"]}\n\n'
         display_content += f'\nTotal:\n'
-        display_content += f'\nDollars remaining: ${text_data["dollars_remaining"]} / ${text_data["dollars_total"]}'
+        display_content += f'\nDollars remaining: ${data["dollars_remaining"]} / ${data["dollars_total"]}'
 
         self.ids.display.text = display_content
+
+        self.save_data(data)
 
         
 class SettingsScreen(Screen):
@@ -48,7 +52,6 @@ class MealMaster(App):
     def build(self):
         
         Builder.load_file('main.kv')
-        self.store = JsonStore('data.json')
 
         Manager = AppScreenManager()
         Manager.current_screen.update_display()
