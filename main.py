@@ -8,8 +8,8 @@ from kivy.uix.boxlayout import BoxLayout
 
 # Approximate Pixel 7a screen size
 #TODO: REMOVE THIS BEFORE BUILD
-from kivy.core.window import Window
-Window.size = (1080/3, 2400/3) 
+# from kivy.core.window import Window
+# Window.size = (1080/3, 2400/3) 
 
 class AppScreenManager(ScreenManager):
     pass
