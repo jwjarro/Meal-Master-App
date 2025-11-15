@@ -7,6 +7,16 @@
     halign: 'center'
     background_normal: ''
 
+<CustomInput@TextInput>:
+    halign: 'center'
+    padding_y: (self.height - self.font_size) / 2.1
+    font_size: 60
+    bold: True
+    input_type: 'number'
+    background_color: (186/255,225/255,255/255)
+    background_normal: ''
+    foreground_color: (1, 1, 1, 1)
+
 <AppScreenManager>:
 
     HomeScreen:
@@ -65,7 +75,7 @@
                     CustomButton:
                         text: 'Progress Week'
                         background_color: (128/255,155/255,206/255,1)
-                        on_release: root.manager.transition.direction = "up"
+                        on_release: root.progress_week()
 
                     CustomButton:
                         text: 'Settings'
@@ -77,11 +87,47 @@
 <SettingsScreen>:
     BoxLayout:
         orientation: 'vertical'
+            
+        CustomInput:
+            id: week_total
+            hint_text: "Total weeks"
+            input_filter: "int"
+            on_text_validate: update_weeks_remaining()
+        CustomInput:
+            id: week_current
+            hint_text: "Current week"
+            input_filter: "int"
+            on_text_validate: update_weeks_remaining()
+        CustomInput:
+            id: dollars_total
+            hint_text: "Total dollars"
+            input_filter: "float"
+        CustomInput:
+            id: dollars_remaining
+            hint_text: "Remaining dollars"
+            input_filter: "float"
+        CustomInput:
+            id: weekly_max
+            hint_text: "Weekly allowance"
+            input_filter: "float"
+        CustomInput:
+            id: weekly_remaining
+            hint_text: "Weekly remaining "
+            input_filter: "float"
+        CustomInput:
+            id: swipes_max
+            hint_text: "Swipes per week"
+            input_filter: "int"
+        CustomInput:
+            id: swipes_remaining
+            hint_text: "Swipes left"
+            input_filter: "int"
 
         CustomButton:
             text: 'Save'
             background_color: (149/255,184/255,209/255,1)
             on_release: 
+                root.apply_settings()
                 root.manager.transition.direction = "down"
                 app.root.current = 'home_screen'
 
@@ -89,18 +135,10 @@
     BoxLayout:
         orientation: 'vertical'
 
-        TextInput:
+        CustomInput:
             id: input
-            halign: 'center'
-            padding_y: (self.height - self.font_size) / 2.1
-            font_size: 60
-            bold: True
             hint_text: "Enter price here"
-            input_type: 'number'
             input_filter: "float"
-            background_color: (186/255,225/255,255/255)
-            background_normal: ''
-            foreground_color: (1, 1, 1, 1)
 
         BoxLayout:
             orientation: 'vertical'
@@ -117,5 +155,5 @@
                 text: 'Cancel'
                 background_color: (255/255,139/255,148/255)
                 on_release: 
-                    root.manager.transition.direction = "down"
+                    root.manager.transition.direction = "up"
                     app.root.current = 'home_screen'
