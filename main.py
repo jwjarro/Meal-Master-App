@@ -2,9 +2,7 @@ from kivy.app import App
 from kivy.lang.builder import Builder
 from kivy.storage.jsonstore import JsonStore
 
-from kivy.uix.screenmanager import ScreenManager, Screen, SlideTransition
-from kivy.uix.widget import Widget
-from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.screenmanager import ScreenManager, Screen
 
 # Approximate Pixel 7a screen size
 #TODO: REMOVE THIS BEFORE BUILD
