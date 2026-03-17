@@ -1,5 +1,7 @@
 Welcome!
 
+NOTE: .apk file currently under construction, use main.py instead
+
 When you first start the app (or if you'd like to reset for the next semester):
 
   1. Open Settings
